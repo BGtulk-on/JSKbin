@@ -84,11 +84,11 @@ Kbin provides a variety of options for customizing animations:
 
 ## 📦 Installation
 
-### Last version: 1.7.2
+### Last version: 1.8.4
 You can add Kbin to your project via a CDN:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/kbin@1.7.2/kbin.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/kbin@1.8.4/kbin.min.js"></script>
 ```
 
 Or you can download the `kbin.min.js` file and include it locally.
