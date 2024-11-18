@@ -97,7 +97,7 @@ You can add Kbin to your project via a CDN:
 <script src="https://cdn.jsdelivr.net/npm/kbin@1.8.4/kbin.min.js"></script>
 ```
 
-Or you can download the `kbin.min.js` file and include it locally.
+Or you can download the `kbin.js` file and include it locally.
 
 ## 👨‍💻 Creator
 
