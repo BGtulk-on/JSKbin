@@ -1,0 +1,14 @@
+{
+  "name": "kbin",
+  "version": "1.6.4",
+  "description": "Easy animation",
+  "main": "kbin.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "animations"
+  ],
+  "author": "BGtulk",
+  "license": "ISC"
+}
