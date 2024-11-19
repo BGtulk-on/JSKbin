@@ -1,16 +1,18 @@
 (function (global) {
     class Kbin {
         goTo(selector, options = {}) {
-            const { x = 0, y = 0, duration = 1, delay = 0, onDisplay = false } = options;
+            const { x = 0, y = 0, duration = 1, delay = 0, onDisplay = false, zoom = 1 } = options;
             const elements = document.querySelectorAll(selector);
 
-            elements.forEach((element) => {
+            elements.forEach((element, index) => {
+                const elementDelay = delay * index; 
                 const applyTransition = () => {
-                    element.style.transition = `transform ${duration}s ease-in-out ${delay}s`;
-                    const transform = `translate(${x}px, ${y}px)`;
+                    element.style.transition = `transform ${duration}s ease-in-out ${elementDelay}s`;
+                    const transform = `translate(${x}px, ${y}px) scale(${zoom})`;
 
                     requestAnimationFrame(() => {
                         element.style.transform = transform;
+                        element.style.opacity = 0; 
                     });
                 };
 
@@ -19,7 +21,12 @@
                         entries.forEach((entry) => {
                             if (entry.isIntersecting) {
                                 applyTransition();
-                                observer.disconnect();
+                                if (onDisplay !== "every") {
+                                    observer.disconnect();
+                                }
+                            } else {
+                                element.style.transition = `opacity ${duration}s ease-in-out`;
+                                element.style.opacity = 0; 
                             }
                         });
                     });
@@ -32,25 +39,26 @@
         }
 
         goFrom(selector, options = {}) {
-            const { x = 50, y = 0, duration = 1.5, delay = 0, opacity = 1, opacityChange = true, onDisplay = false } = options;
+            const { x = 50, y = 0, duration = 1.5, delay = 0, opacity = 1, opacityChange = true, onDisplay = false, zoom = 1, zoomFrom = 1 } = options;
             const elements = document.querySelectorAll(selector);
 
-            elements.forEach((element) => {
+            elements.forEach((element, index) => {
+                const elementDelay = delay * index; 
                 const applyTransition = () => {
                     element.style.transition = 'none';
                     if (opacityChange) {
                         element.style.opacity = 0;
                     }
-                    element.style.transform = `translate(${x}px, ${y}px)`;
+                    element.style.transform = `translate(${x}px, ${y}px) scale(${zoomFrom})`;
 
                     requestAnimationFrame(() => {
                         element.offsetHeight;
-                        element.style.transition = `opacity ${duration}s ease-out ${delay}s, transform ${duration}s ease-out ${delay}s`;
+                        element.style.transition = `opacity ${duration}s ease-out ${elementDelay}s, transform ${duration}s ease-out ${elementDelay}s`;
 
                         if (opacityChange) {
                             element.style.opacity = opacity;
                         }
-                        element.style.transform = 'translate(0, 0)';
+                        element.style.transform = `translate(0, 0) scale(${zoom})`;
                     });
                 };
 
@@ -59,7 +67,12 @@
                         entries.forEach((entry) => {
                             if (entry.isIntersecting) {
                                 applyTransition();
-                                observer.disconnect();
+                                if (onDisplay !== "every") {
+                                    observer.disconnect();
+                                }
+                            } else {
+                                element.style.transition = `opacity ${duration}s ease-in-out`;
+                                element.style.opacity = 0;
                             }
                         });
                     });
@@ -68,6 +81,86 @@
                 } else {
                     applyTransition();
                 }
+            });
+        }
+
+        zoomFrom(selector, options = {}) {
+            const { x = 0, y = 0, duration = 1.5, delay = 0, opacity = 1, opacityChange = true, onDisplay = false, zoomFrom = 0 } = options;
+            const elements = document.querySelectorAll(selector);
+
+            elements.forEach((element, index) => {
+                const elementDelay = delay * index;
+                const applyTransition = () => {
+                    element.style.transition = 'none';
+                    element.style.transform = `translate(${x}px, ${y}px) scale(${zoomFrom})`;
+                    if (opacityChange) {
+                        element.style.opacity = 0;
+                    }
+
+                    requestAnimationFrame(() => {
+                        element.offsetHeight;
+                        element.style.transition = `opacity ${duration}s ease-out ${elementDelay}s, transform ${duration}s ease-out ${elementDelay}s`;
+
+                        if (opacityChange) {
+                            element.style.opacity = opacity;
+                        }
+                        element.style.transform = `translate(0, 0) scale(1)`;
+                    });
+                };
+
+                if (onDisplay) {
+                    const observer = new IntersectionObserver((entries, observer) => {
+                        entries.forEach((entry) => {
+                            if (entry.isIntersecting) {
+                                applyTransition();
+                                if (onDisplay !== "every") {
+                                    observer.disconnect();
+                                }
+                            } else {
+                                element.style.transition = `opacity ${duration}s ease-in-out`;
+                                element.style.opacity = 0; 
+                            }
+                        });
+                    });
+
+                    observer.observe(element);
+                } else {
+                    applyTransition();
+                }
+            });
+        }
+        hover(selector, options = {}) {
+            const { zoom = 1, duration = 1, delay = 0, zoomFrom = 1, opacity = 1, opacityChange = true } = options;
+            const elements = document.querySelectorAll(selector);
+
+            elements.forEach((element) => {
+                const applyHoverEffect = () => {
+                    element.style.transition = `transform ${duration}s ease-in-out ${delay}s, opacity ${duration}s ease-in-out ${delay}s`;
+                    if (opacityChange) {
+                        element.style.opacity = opacity;
+                    }
+
+                    element.style.transform = `scale(${zoom})`;
+                };
+
+                const removeHoverEffect = () => {
+                    element.style.transition = `transform ${duration}s ease-in-out, opacity ${duration}s ease-in-out`;
+                    element.style.transform = `scale(${zoomFrom})`;
+
+                    if (opacityChange) {
+                        element.style.opacity = 1;
+                    }
+
+                    element.style.animation = ''; 
+                };
+
+                element.addEventListener('mouseover', () => {
+                    applyHoverEffect();
+                });
+
+                element.addEventListener('mouseout', () => {
+                    removeHoverEffect();
+                });
             });
         }
     }
