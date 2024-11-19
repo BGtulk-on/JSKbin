@@ -75,7 +75,7 @@ kbin.hover(".box", { zoom: 1.2, duration: 0.5, zoomFrom: 0.8 });
 
 ## 🎨 Customization
 
-Kbin provides a variety of options for customizing animations:
+JSKbin provides a variety of options for customizing animations:
 
 - **Positioning**: Move elements in any direction with `x` and `y`.
 - **Timing**: Adjust animation speed with `duration` and delay with `delay`.
@@ -115,7 +115,7 @@ Kbin provides a variety of options for customizing animations:
 ## 📦 Installation
 
 ### Last version: 1.10.5
-You can add Kbin to your project via a CDN:
+You can add JSKbin to your project via a CDN:
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/kbin@1.10.5/kbin.min.js"></script>
@@ -129,4 +129,4 @@ Or you can download the `kbin.js` file and include it locally.
 
 ---
 
-Thank you for using Kbin! 😉
+Thank you for using JSKbin! 😉
