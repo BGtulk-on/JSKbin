@@ -1,7 +1,7 @@
 
-# Kbin ✨
+# JSKbin ✨
 
-Kbin is a lightweight and flexible JavaScript library that makes animating elements on your webpage a breeze. With simple functions, you can create smooth transitions with minimal code. 🌟
+JSKbin is a lightweight and flexible JavaScript library that makes animating elements on your webpage a breeze. With simple functions, you can create smooth transitions with minimal code. 🌟
 
 ## 🚀 Features
 
