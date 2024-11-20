@@ -156,7 +156,7 @@ JSKbin provides a variety of options for customizing animations:
 
 ## 📦 Installation
 
-### Last version: 1.10.5
+### Last version: 1.10.12
 You can add JSKbin to your project via a CDN:
 
 ```html
