@@ -1,6 +1,6 @@
 {
   "name": "kbin",
-  "version": "1.10.10",
+  "version": "1.10.12",
   "description": "Easy animation",
   "main": "kbin.js",
   "scripts": {
