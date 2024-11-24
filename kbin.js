@@ -1,8 +1,12 @@
 (function (global) {
     class Kbin {
+        constructor() {
+            this.isMobile = window.innerWidth <= 768; 
+        }
 
         goTo(selector, options = {}) {
             const {
+                target = "both",
                 x = 0,
                 y = 0,
                 duration = 1,
@@ -14,6 +18,7 @@
                 fromColor = null,
                 backFromColor = null,
             } = options;
+            if (!this.shouldAnimate(target)) return;
             const elements = document.querySelectorAll(selector);
 
             elements.forEach((element, index) => {
@@ -67,6 +72,7 @@
 
         goFrom(selector, options = {}) {
                 const {
+                    target = "both",
                     x = 50,
                     y = 0,
                     duration = 1.5,
@@ -81,6 +87,7 @@
                     fromColor = null,
                     backFromColor = null,
                 } = options;
+                if (!this.shouldAnimate(target)) return;
                 const elements = document.querySelectorAll(selector);
 
                 elements.forEach((element, index) => {
@@ -141,7 +148,8 @@
             }
 
             hover(selector, options = {}) {
-                const { zoom = 1, duration = 1, delay = 0, zoomFrom = 1, opacity = 1, opacityChange = true, color = null, backColor = null, fromColor = null, backFromColor = null } = options;
+                const {target = "both", zoom = 1, duration = 1, delay = 0, zoomFrom = 1, opacity = 1, opacityChange = true, color = null, backColor = null, fromColor = null, backFromColor = null } = options;
+                if (!this.shouldAnimate(target)) return;
                 const elements = document.querySelectorAll(selector);
 
                 elements.forEach((element) => {
@@ -226,6 +234,11 @@
                         applyTransition();
                     }
                 });
+            }
+            shouldAnimate(target) {
+                if (target === "mobile" && !this.isMobile) return false;
+                if (target === "desktop" && this.isMobile) return false;
+                return true;
             }
         }
     
